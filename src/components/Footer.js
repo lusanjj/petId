@@ -5,11 +5,10 @@ import { SiWechat } from 'react-icons/si';
 
 const FooterContainer = styled.footer`
   background-color: #FF6F61;
-  padding: 20px;
+  padding: 20px 15px;
   text-align: center;
-  position: relative;
-  bottom: 0;
   width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't increase the total width */
 `;
 
 const ContactInfo = styled.div`
@@ -17,11 +16,21 @@ const ContactInfo = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const ContactItem = styled.div`
   color: #FFFFFF;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -35,20 +44,35 @@ const ContactItem = styled.div`
       color: #FFDAB9;
     }
   }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
+
 const FooterText = styled.p`
-  margin: 10;
+  margin-top: 10px;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Footer = () => {
   return (
     <FooterContainer>
       <ContactInfo>
-        
-
         <ContactItem>
           <FaPhone />
           <span>+1 (437) 226-3728</span>
@@ -60,12 +84,11 @@ const Footer = () => {
         <ContactItem>
           <a href="https://www.instagram.com/a_lusanj02" target="_blank" rel="noopener noreferrer">
             <FaInstagram />
-            <span> lusanj02</span>
+            <span>lusanj02</span>
           </a>
         </ContactItem>
       </ContactInfo>
       <FooterText>© {new Date().getFullYear()} Shane Liu. All rights reserved.</FooterText>
-
     </FooterContainer>
   );
 };

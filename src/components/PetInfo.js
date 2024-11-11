@@ -21,13 +21,17 @@ const fadeIn = keyframes`
 `;
 
 const InfoContainer = styled.div`
-  padding: 40px 20px;
+  padding: 20px;
   background: #F7CAC9;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   animation: ${fadeIn} 1s ease-out;
+
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
 `;
 
 const MainImage = styled.img`
@@ -43,11 +47,11 @@ const MainImage = styled.img`
   }
 
   @media (max-width: 768px) {
-    max-width: 300px;
+    max-width: 350px;
   }
 
   @media (max-width: 480px) {
-    max-width: 200px;
+    max-width: 250px;
   }
 `;
 
@@ -55,7 +59,12 @@ const ImageStackContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 10px;
   margin-top: 20px;
+
+  @media (max-width: 480px) {
+    gap: 5px;
+  }
 `;
 
 const StackedImage = styled.img`
@@ -88,25 +97,28 @@ const InfoList = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   @media (max-width: 768px) {
-    max-width: 400px;
+    max-width: 350px;
+    padding: 15px;
   }
 
   @media (max-width: 480px) {
-    max-width: 300px;
-    padding: 15px;
+    max-width: 280px;
+    padding: 10px;
   }
 `;
-
 const InfoItem = styled.p`
   font-family: 'Roboto', sans-serif;
   font-size: 1.15rem;
   color: #333333;
-  margin: 15px 0;
+  margin: 10px 0;
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* Ensures the text wraps within the container */
+  word-break: break-word; /* Breaks long words to prevent overflow */
+  line-height: 1.5; /* Adds space between lines for better readability */
 
   strong {
     color: #6B5B95;
@@ -123,9 +135,11 @@ const InfoItem = styled.p`
   }
 
   @media (max-width: 480px) {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin: 8px 0;
   }
 `;
+
 
 const ConnectButton = styled(Link)`
   display: inline-block;
@@ -136,7 +150,7 @@ const ConnectButton = styled(Link)`
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
   font-size: 1.5rem;
-  margin-top: 20px;
+  margin-top: 15px;
   transition: background-color 0.3s, transform 0.3s;
   display: flex;
   align-items: center;
@@ -178,7 +192,7 @@ const PetInfo = () => {
             key={index}
             src={image.src}
             alt={image.alt}
-            onMouseOver={() => handleImageClick(image.src)}
+            onClick={() => handleImageClick(image.src)}
           />
         ))}
       </ImageStackContainer>
