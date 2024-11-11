@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaPaw } from 'react-icons/fa';
+import { FaPaw, FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
@@ -9,17 +9,8 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-
-  @media (max-width: 768px) {
-    padding: 15px;
-  }
-
-  @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+  position: relative;
+  z-index: 1000;
 `;
 
 const Title = styled.h1`
@@ -45,29 +36,64 @@ const NavBar = styled.nav`
   gap: 15px;
   font-family: 'Lato', sans-serif;
 
-  @media (max-width: 480px) {
-    flex-direction: column;
-    gap: 5px;
-    width: 100%;
+  a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #FFDAB9;
+      color: #6B5B95;
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* Hide the desktop navbar on smaller screens */
   }
 `;
 
-const NavLink = styled(Link)`
+const MobileMenuIcon = styled.div`
+  display: none;
   color: #FFFFFF;
-  text-decoration: none;
-  font-size: 1.2rem;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  font-size: 2rem;
+  cursor: pointer;
 
-  &:hover {
-    background-color: #FFDAB9;
-    color: #6B5B95;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const MobileNav = styled.div`
+  display: ${(props) => (props.open ? 'block' : 'none')};
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #FF6F61;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  a {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #FFDAB9;
+      color: #6B5B95;
+    }
   }
 
-  @media (max-width: 480px) {
-    font-size: 1rem;
-    padding: 5px 8px;
+  @media (min-width: 769px) {
+    display: none; /* Ensure mobile menu doesn't show on larger screens */
   }
 `;
 
@@ -86,13 +112,19 @@ const LanguageButton = styled.button`
     color: #6B5B95;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     font-size: 1rem;
     padding: 5px 8px;
   }
 `;
 
 const Header = ({ toggleLanguage, currentLanguage }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <HeaderContainer>
       <Title>
@@ -100,12 +132,26 @@ const Header = ({ toggleLanguage, currentLanguage }) => {
         {currentLanguage === 'en' ? 'Pet ID' : '宠物身份证'}
       </Title>
       <NavBar>
-        <NavLink to="/">{currentLanguage === 'en' ? 'Home' : '首页'}</NavLink>
-        <NavLink to="/contact">{currentLanguage === 'en' ? 'Contact' : '联系'}</NavLink>
+        <Link to="/">{currentLanguage === 'en' ? 'Home' : '首页'}</Link>
+        <Link to="/contact">{currentLanguage === 'en' ? 'Contact' : '联系'}</Link>
         <LanguageButton onClick={toggleLanguage}>
           {currentLanguage === 'en' ? '中文' : 'EN'}
         </LanguageButton>
       </NavBar>
+      <MobileMenuIcon onClick={handleMenuToggle}>
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </MobileMenuIcon>
+      <MobileNav open={menuOpen}>
+        <Link to="/" onClick={handleMenuToggle}>
+          {currentLanguage === 'en' ? 'Home' : '首页'}
+        </Link>
+        <Link to="/contact" onClick={handleMenuToggle}>
+          {currentLanguage === 'en' ? 'Contact' : '联系'}
+        </Link>
+        <LanguageButton onClick={toggleLanguage}>
+          {currentLanguage === 'en' ? '中文' : 'EN'}
+        </LanguageButton>
+      </MobileNav>
     </HeaderContainer>
   );
 };
