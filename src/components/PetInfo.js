@@ -176,12 +176,51 @@ const ConnectButton = styled(Link)`
   }
 `;
 
-const PetInfo = () => {
+
+// Styled components (as previously defined)...
+
+const PetInfo = ({ currentLanguage }) => {
   const [mainImage, setMainImage] = useState(idPhoto);
 
   const handleImageClick = (imageSrc) => {
     setMainImage(imageSrc);
   };
+
+  // Language-specific text
+  const text = {
+    en: {
+      name: 'Name: ',
+      type: 'Type:',
+      breed: 'Breed:',
+      birthday: 'Birthday:',
+      markings: 'Special Markings:',
+      address: 'Address:',
+      petName: 'Yuan Bao',
+      petType: 'Cat',
+      petBreed: 'Silver Shaded',
+      petBirthday: '2024.6.28',
+      petMarkings: 'Super cute with blue-green pupils!',
+      petAddress: '159 Wellesley St E',
+      buttonText: 'Connect with Owner',
+    },
+    zh: {
+      name: '姓名:',
+      type: '种类:',
+      breed: '品种:',
+      birthday: '生日:',
+      markings: '特别标记:',
+      address: '地址:',
+      petName: '银圆宝',
+      petType: '猫',
+      petBreed: '多伦多深情纯种银渐层',
+      petBirthday: '2024.6.28',
+      petMarkings: '蓝绿色瞳孔，非常可爱!',
+      petAddress: '159 Wellesley St E',
+      buttonText: '联系主人',
+    },
+  };
+
+  const t = text[currentLanguage]; // Choose the text based on the current language
 
   return (
     <InfoContainer>
@@ -192,20 +231,20 @@ const PetInfo = () => {
             key={index}
             src={image.src}
             alt={image.alt}
-            onClick={() => handleImageClick(image.src)}
+            onMouseOver={() => handleImageClick(image.src)}
           />
         ))}
       </ImageStackContainer>
       <InfoList>
-        <InfoItem><FaStar /><strong>Name:&nbsp;</strong> (银)圆宝</InfoItem>
-        <InfoItem><FaDog /><strong>Type:&nbsp;</strong> Cat</InfoItem>
-        <InfoItem><FaPaw /><strong>Breed:&nbsp;</strong> 多伦多深情纯种银渐层</InfoItem>
-        <InfoItem><FaCalendarAlt /><strong>Birthday:&nbsp;</strong> 2024.6.28</InfoItem>
-        <InfoItem><FaBone /><strong>Special Markings:&nbsp;</strong> Super cute with blue-green pupils!</InfoItem>
-        <InfoItem><FaMapMarkerAlt /><strong>Address:&nbsp;</strong> 159 Wellesley St E</InfoItem>
+        <InfoItem><FaStar /><strong>{t.name}</strong> &nbsp;{t.petName}</InfoItem>
+        <InfoItem><FaDog /><strong>{t.type}</strong> &nbsp;{t.petType}</InfoItem>
+        <InfoItem><FaPaw /><strong>{t.breed}</strong> &nbsp;{t.petBreed}</InfoItem>
+        <InfoItem><FaCalendarAlt /><strong>{t.birthday}</strong>&nbsp; {t.petBirthday}</InfoItem>
+        <InfoItem><FaBone /><strong>{t.markings}</strong> &nbsp;{t.petMarkings}</InfoItem>
+        <InfoItem><FaMapMarkerAlt /><strong>{t.address}</strong> &nbsp;{t.petAddress}</InfoItem>
       </InfoList>
       <ConnectButton to="/contact">
-        <FaEnvelope /> Connect with Owner
+        <FaEnvelope /> {t.buttonText}
       </ConnectButton>
     </InfoContainer>
   );
